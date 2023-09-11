@@ -1,0 +1,17 @@
+{  
+    "python.languageServer": "Pylance",
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.codeActionsOnSave": {
+          "source.organizeImports.ruff": true,
+        }
+    },
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoFormatStrings": true,
+    "files.autoSave": "onFocusChange",
+    "autoDocstring.docstringFormat": "numpy-notypes",
+  }

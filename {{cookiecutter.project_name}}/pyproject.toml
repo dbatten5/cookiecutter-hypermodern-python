@@ -1,55 +1,16 @@
-[tool.poetry]
+[project]
 name = "{{cookiecutter.project_name}}"
 version = "{{cookiecutter.version}}"
 description = "{{cookiecutter.friendly_name}}"
-authors = ["{{cookiecutter.author}} <{{cookiecutter.email}}>"]
-license = "{{cookiecutter.license}}"
+authors = [
+    {name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}"},
+]
+license = {text = "{{cookiecutter.license}}"}
+dependencies = []
+requires-python = ">=3.10"
 readme = "README.md"
-homepage = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}"
-repository = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}"
-documentation = "https://{{cookiecutter.project_name}}.readthedocs.io"
-{% if cookiecutter.package_name != cookiecutter.project_name.replace('-', '_') -%}
-packages = [
-    { include = "{{cookiecutter.package_name}}", from = "src" },
-]
-{% endif -%}
-classifiers = [
-    "{{cookiecutter.development_status}}",
-]
 
-[tool.poetry.urls]
-Changelog = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/releases"
-
-[tool.poetry.dependencies]
-python = "^3.7"
-click = ">=8.0.1"
-
-[tool.poetry.group.test.dependencies]
-pytest = ">=6.2.5"
-coverage = {extras = ["toml"], version = "^6.1"}
-xdoctest = {extras = ["colors"], version = ">=0.15.10"}
-
-[tool.poetry.group.dev.dependencies]
-Pygments = ">=2.10.0"
-bandit = ">=1.7.4"
-black = "*"
-darglint = ">=1.8.1"
-ruff = "*"
-mypy = "*"
-pep8-naming = ">=0.12.1"
-pre-commit = ">=2.16.0"
-pre-commit-hooks = ">=4.1.0"
-pyupgrade = ">=2.29.1"
-safety = ">=1.10.3"
-typeguard = ">=2.13.3"
-
-[tool.poetry.group.docs.dependencies]
-furo = ">=2021.11.12"
-sphinx = ">=4.3.2"
-sphinx-autobuild = ">=2021.3.14"
-sphinx-click = ">=3.0.2"
-myst-parser = {version = ">=0.16.1"}
-
+# TODO: migrate this to pdm
 [tool.poetry.scripts]
 {{cookiecutter.project_name}} = "{{cookiecutter.package_name}}.__main__:main"
 
@@ -76,16 +37,56 @@ show_error_context = true
 src = ['src', 'tests']
 line-length = 80
 select = [
+    'ASYNC',
     'B',
     'B9',
+    'BLE',
+    'C4',
+    'COM',
     'D',
+    'DTZ',
     'E',
+    'EXE',
     'F',
+    'FA',
     'I001',
+    'ICN',
+    'INP',
+    'ISC',
     'N',
+    'NPY',
+    'PD',
+    'PERF',
+    'PGH',
+    'PIE',
+    'PT',
+    'PTH',
+    'PYI',
+    'Q',
+    'RET',
+    'RSE',
+    'RUF',
     'S',
+    'SIM',
+    'SLOT',
+    'T10',
+    'TD',
+    'TID',
+    'UP',
     'W',
+    'YTT',
 ]
+ignore = [
+    'PGH003', # Specific rule codes not always available
+    'RET504', # Sometimes worth doing for readability
+    'RET505', # Currently has a bug
+    'RET506', # Currently has a bug
+    'S603', # Bug: https://github.com/astral-sh/ruff/issues/4045
+    'SIM300', # Doesn't work well with Pandas
+    'TD002', # Not for prototyping
+    'TD003', # Not for prototyping
+]
+namespace-packages = ["src"]
 
 [tool.ruff.mccabe]
 max-complexity = 10
@@ -101,12 +102,8 @@ max-complexity = 10
 ]
 
 [tool.ruff.pydocstyle]
-convention = "google"
+convention = "numpy-notypes"
 
 [tool.ruff.isort]
 force-single-line = true
 lines-after-imports = 2
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
